@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
-from sqlalchemy import metadata
+from sqlalchemy import MetaData
 
 metadata = MetaData(
     naming_convention={
@@ -18,6 +18,11 @@ class Stock(db.Model, SerializerMixin):
     companyName = db.Column(db.String, nullable=False)
     industry = db.Column(db.String, nullable = False)
 
+    #relationship
+    transactions = db.relationship('Transaction', back_populates='stock')
+    #serialization rules
+    serialize_rules = ['-transactions.stock']
+
 class Member(db.Model, SerializerMixin):
     __tablename__='members'
 
@@ -28,6 +33,12 @@ class Member(db.Model, SerializerMixin):
     bioguide_id = db.Column(db.Integer)
     date_current = db.Column(db.String)
 
+    #relationship
+    transactions = db.relationship('Transaction', back_populates='member')
+    #serialization rules
+    serialize_rules = ['-transactions.member']
+                                
+
 class Transaction(db.Model, SerializerMixin):
     __tablename__='transactions'
 
@@ -37,5 +48,9 @@ class Transaction(db.Model, SerializerMixin):
     amount = db.Column(db.Float)
     member_id = db.Column(db.Integer, db.ForeignKey('members.id'))
     stock_id = db.Column(db.Integer, db.ForeignKey('stocks.id'))
-    
 
+    #relationship
+    stock = db.relationship('Stock', back_populates='transactions')
+    member = db.relationship('Member', back_populates='transactions')
+    #serialization rules
+    serialize_rules = ['-stock.transactions', '-member.transactions']
