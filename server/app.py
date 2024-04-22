@@ -37,6 +37,17 @@ def member_by_id():
         return {"error": "Congressperson not found."}, 404
     else:
         return member_id.to_dict(), 200
+    
+@app.route('/transactions')
+def all_transactions():
+    transaction_obj = Transaction.query.all()
+
+    transaction_dict=[]
+    for transaction in transaction_obj:
+        transaction_dict.append(transaction.to_dict())
+
+    return transaction_dict, 200
+
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
