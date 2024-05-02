@@ -15,7 +15,7 @@ class Stock(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     ticker = db.Column(db.String, nullable=False)
-    companyName = db.Column(db.String, nullable=False)
+    company_name = db.Column(db.String, nullable=False)
     industry = db.Column(db.String, nullable = False)
 
     #relationship
