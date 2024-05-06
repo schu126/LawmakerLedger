@@ -16,6 +16,12 @@ function Navbar() {
           <Link to="/members" className="hover:bg-gray-700 px-3 py-2 rounded-md">Members</Link>
         </li>
         <li>
+          <Link to="/stocks" className="hover:bg-gray-700 px-3 py-2 rounded-md">Stocks</Link>
+        </li>
+        <li>
+          <Link to="/transactions" className="hover:bg-gray-700 px-3 py-2 rounded-md">Transactions</Link>
+        </li>
+        <li>
           <Link to="/about" className="hover:bg-gray-700 px-3 py-2 rounded-md">About</Link>
         </li>
       </ul>
