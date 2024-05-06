@@ -11,16 +11,14 @@ metadata = MetaData(
 db = SQLAlchemy(metadata=metadata)
 
 class Stock(db.Model, SerializerMixin):
-    __tablename__='stocks'
-
+    __tablename__ = 'stocks'
     id = db.Column(db.Integer, primary_key=True)
     ticker = db.Column(db.String, nullable=False)
-    company_name = db.Column(db.String, nullable=False)
-    industry = db.Column(db.String, nullable = False)
-
-    #relationship
+    company_name = db.Column(db.String, nullable=True)  # Allow nullable values
+    industry = db.Column(db.String, nullable=True, default='N/A')
+    # relationship
     transactions = db.relationship('Transaction', back_populates='stock')
-    #serialization rules
+    # serialization rules
     serialize_rules = ['-transactions.stock']
 
 class Member(db.Model, SerializerMixin):
@@ -29,7 +27,7 @@ class Member(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable = False)
     district = db.Column(db.String, nullable=False)
-    party = db.Column(db.String)
+    party = db.Column(db.String, nullable=True)
     bioguide_id = db.Column(db.Integer)
     date_current = db.Column(db.String)
 
@@ -45,7 +43,7 @@ class Transaction(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Integer)
     type = db.Column(db.String)
-    amount = db.Column(db.Float)
+    amount = db.Column(db.String)
     member_id = db.Column(db.Integer, db.ForeignKey('members.id'))
     stock_id = db.Column(db.Integer, db.ForeignKey('stocks.id'))
 

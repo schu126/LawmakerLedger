@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 import os
+import requests
 from flask_migrate import Migrate;
 from flask_cors import CORS
 from models import db, Member, Stock, Transaction
@@ -14,6 +15,12 @@ app.json.compact = False
 
 migrate = Migrate(app, db)
 db.init_app(app)
+
+@app.route('/import', methods=['GET'])
+def handle_import_request():
+    trade_data = get_trade_data()  # Get the trade data
+    # Process the trade data and save it to the database
+    return jsonify({'message': 'Import request processed successfully'})
 
 @app.route('/')
 def root():
