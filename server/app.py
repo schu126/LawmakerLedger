@@ -71,13 +71,17 @@ def stock_by_ticker(ticker):
     else:
         return stock.to_dict(), 200
 
-from flask import jsonify  # Make sure to import jsonify
-
 @app.route('/members/<int:member_id>/transactions', methods=['GET'])
 def transactions_by_member(member_id):
     transactions = Transaction.query.filter(Transaction.member_id == member_id).all()
-    transaction_list = [transaction.to_dict() for transaction in transactions]  # List comprehension for cleaner code
-    return jsonify(transaction_list), 200  # Use jsonify to properly format the response as JSON
+    transaction_list = [transaction.to_dict() for transaction in transactions]  
+    return jsonify(transaction_list), 200  
+
+@app.route('/members/<int:member_id>/stocks', methods=['GET'])
+def stocks_by_member(member_id):
+    stocks = Stock.query.filter(Stock.transactions.any(member_id=member_id)).all()
+    stock_list = [stock.to_dict() for stock in stocks]
+    return jsonify(stock_list), 200
 
 
 if __name__ == "__main__":

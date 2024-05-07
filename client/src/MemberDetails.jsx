@@ -12,7 +12,7 @@ function MemberDetails() {
 
   useEffect(() => {
     fetchMemberDetails();
-    // fetchMemberStocks();
+    fetchMemberStocks();
     fetchMemberTransactions();
   }, [memberId]);
 
@@ -31,17 +31,17 @@ function MemberDetails() {
     }
   };
 
-  // const fetchMemberStocks = async () => {
-  //   try {
-  //     const response = await fetch(`/members/${memberId}/stocks`);
-  //     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-  //     const data = await response.json();
-  //     setStocks(data);
-  //   } catch (error) {
-  //     console.error('Error fetching stocks:', error);
-  //     setError(error.message);
-  //   }
-  // };
+  const fetchMemberStocks = async () => {
+    try {
+      const response = await fetch(`http://localhost:5555/members/${memberId}/stocks`);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
+      setStocks(data);
+    } catch (error) {
+      console.error('Error fetching stocks:', error);
+      setError(error.message);
+    }
+  };
 
   const fetchMemberTransactions = async () => {
     try {
@@ -74,19 +74,20 @@ function MemberDetails() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Type</TableCell>
             <TableCell>Stock</TableCell>
-            <TableCell>Date</TableCell>
+            <TableCell>Ticker</TableCell>
+            <TableCell>Type</TableCell>
             <TableCell>Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {transactions.map(transaction => (
             <TableRow key={transaction.id}>
-              <TableCell>{transaction.member ? transaction.member.name : 'N/A'}</TableCell>
+              {/* <TableCell>{transaction.member ? transaction.member.name : 'N/A'}</TableCell> */}
               <TableCell>{transaction.stock ? transaction.stock.company_name : 'N/A'}</TableCell>
               <TableCell>{transaction.stock ? transaction.stock.ticker : 'N/A'}</TableCell>
               <TableCell>{transaction.type}</TableCell>
+              <TableCell className="text-right">{transaction.amount}</TableCell>
             </TableRow>
           ))}
         </TableBody>
