@@ -4,6 +4,8 @@ import requests
 from flask_migrate import Migrate
 from flask_cors import CORS
 from models import db, Member, Stock, Transaction
+from trade_requests import get_senate_trade_data, get_house_trade_data 
+
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
@@ -18,8 +20,15 @@ CORS(app)
 
 @app.route('/import', methods=['GET'])
 def handle_import_request():
-    # Process the import request
-    return jsonify({'message': 'Import request processed successfully'})
+    senate_data = get_senate_trade_data()
+    house_data = get_house_trade_data()
+    
+    # if senate_data is not None and house_data is not None:
+    #     # Assuming you have methods to save this data to the database
+    #     save_data_to_database(senate_data, house_data)  # You need to implement this function
+    #     return jsonify({'message': 'Data imported successfully'}), 200
+    # else:
+    #     return jsonify({'error': 'Failed to fetch data'}), 500
 
 @app.route('/')
 def root():

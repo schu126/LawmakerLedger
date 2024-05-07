@@ -5,27 +5,42 @@ import './MemberDetails.css';
 function MemberDetails() {
   const { memberId } = useParams();
   const [member, setMember] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchMemberDetails();
-  }, [memberId]);
+  }, [memberId]); // Dependency array includes memberId to refetch when the parameter changes
 
   const fetchMemberDetails = async () => {
+    setLoading(true);
     try {
-      const response = await fetch(`/members/${memberId}`);
-      if (response.status === 200) {
+      const response = await fetch(`http://localhost:5555/members/${memberId}`); // Adjust URL based on setup
+      if (response.ok) {
         const data = await response.json();
         setMember(data);
-      } else if (response.status !== 304) {
-        throw new Error('Error fetching member details');
+        setError(null); // Clear any previous errors
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
     } catch (error) {
       console.error('Error fetching member details:', error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>; // Show loading state
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>; // Show error state
+  }
+
   if (!member) {
-    return <div>Loading...</div>;
+    return <div>Member not found.</div>; // Show not found message if no member data
   }
 
   return (
@@ -39,4 +54,4 @@ function MemberDetails() {
   );
 }
 
-export default MemberDetails;
+export default MemberDetails
