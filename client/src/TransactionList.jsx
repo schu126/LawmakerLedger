@@ -10,12 +10,19 @@ function TransactionList() {
   const fetchTransactions = async () => {
     try {
       const response = await fetch('/transactions');
-      const data = await response.json();
+      console.log('Response:', response);
+      const text = await response.text();
+      console.log('Response Body:', text);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = JSON.parse(text);
       setTransactions(data);
     } catch (error) {
       console.error('Error fetching transactions:', error);
     }
   };
+  
 
   return (
     <div>

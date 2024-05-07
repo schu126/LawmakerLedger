@@ -13,8 +13,12 @@ function MemberDetails() {
   const fetchMemberDetails = async () => {
     try {
       const response = await fetch(`/members/${memberId}`);
-      const data = await response.json();
-      setMember(data);
+      if (response.status === 200) {
+        const data = await response.json();
+        setMember(data);
+      } else if (response.status !== 304) {
+        throw new Error('Error fetching member details');
+      }
     } catch (error) {
       console.error('Error fetching member details:', error);
     }

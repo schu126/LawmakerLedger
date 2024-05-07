@@ -14,12 +14,19 @@ function MemberList() {
   const fetchMembers = async () => {
     try {
       const response = await fetch('/members');
-      const data = await response.json();
+      console.log('Response:', response);
+      const text = await response.text();
+      console.log('Response Body:', text);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = JSON.parse(text);
       setMembers(data);
     } catch (error) {
       console.error('Error fetching members:', error);
     }
   };
+  
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);

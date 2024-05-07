@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import os
 import requests
 from flask_migrate import Migrate
@@ -13,6 +13,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.json.compact = False
 migrate = Migrate(app, db)
 db.init_app(app)
+CORS(app)
+
 
 @app.route('/import', methods=['GET'])
 def handle_import_request():
@@ -26,10 +28,9 @@ def root():
 @app.route('/members', methods=['GET'])
 def all_members():
     member_obj = Member.query.all()
-    member_dict = []
-    for member in member_obj:
-        member_dict.append(member.to_dict())
-    return member_dict, 200
+    member_dict = [member.to_dict() for member in member_obj]
+    return jsonify(member_dict), 200
+
 
 @app.route('/members/<int:id>', methods=['GET'])
 def member_by_id(id):
