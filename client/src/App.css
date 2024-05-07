@@ -1,19 +1,5 @@
-/* app.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-#root {
-  width: 100%;
+.container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding-top: 4rem; /* Adjust this value based on the height of your navbar */
-  text-align: center;
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  padding: 2rem;
 }

@@ -1,0 +1,17 @@
+.member-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .member-details-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .member-details-info {
+    font-size: 1.2rem;
+    color: #666;
+  }

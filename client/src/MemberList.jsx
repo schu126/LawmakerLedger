@@ -1,23 +1,65 @@
-// components/MemberList.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import './MemberList.css';
 
 function MemberList() {
-  // Dummy data for example
-  const members = [
-    { id: 1, name: "John Doe" },
-    { id: 2, name: "Jane Smith" }
-  ];
+  const [members, setMembers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterParty, setFilterParty] = useState('');
+
+  useEffect(() => {
+    fetchMembers();
+  }, []);
+
+  const fetchMembers = async () => {
+    try {
+      const response = await fetch('/members');
+      const data = await response.json();
+      setMembers(data);
+    } catch (error) {
+      console.error('Error fetching members:', error);
+    }
+  };
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleFilterParty = (e) => {
+    setFilterParty(e.target.value);
+  };
+
+  const filteredMembers = members.filter((member) => {
+    const nameMatch = member.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const partyMatch = filterParty === '' || member.party === filterParty;
+    return nameMatch && partyMatch;
+  });
 
   return (
-    <div className="container mx-auto px-4">
-      <h2 className="text-2xl font-semibold text-gray-800 mt-6 mb-4">Members of Congress</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {members.map(member => (
-          <div key={member.id} className="bg-white rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow duration-300">
-            <Link to={`/members/${member.id}`} className="text-blue-500 hover:text-blue-700 transition-colors duration-300 ease-in-out text-lg font-medium">
+    <div className="container">
+      <h2 className="members-title">Members of Congress</h2>
+      <div className="search-filter">
+        <input
+          type="text"
+          placeholder="Search by name"
+          value={searchQuery}
+          onChange={handleSearch}
+          className="search-input"
+        />
+        <select value={filterParty} onChange={handleFilterParty} className="filter-select">
+          <option value="">All Parties</option>
+          <option value="Republican">Republican</option>
+          <option value="Democratic">Democratic</option>
+          <option value="Independent">Independent</option>
+        </select>
+      </div>
+      <div className="member-grid">
+        {filteredMembers.map((member) => (
+          <div key={member.id} className="member-card">
+            <Link to={`/members/${member.id}`} className="member-link">
               {member.name}
             </Link>
+            <p className="member-party">{member.party}</p>
           </div>
         ))}
       </div>

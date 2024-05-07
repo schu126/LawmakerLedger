@@ -50,10 +50,8 @@ def all_transactions():
 @app.route('/stocks', methods=['GET'])
 def all_stocks():
     stock_obj = Stock.query.all()
-    stock_dict = []
-    for stock in stock_obj:
-        stock_dict.append(stock.to_dict())
-    return stock_dict, 200
+    stock_dict = [stock.to_dict() for stock in stock_obj]
+    return jsonify(stock_dict), 200
 
 @app.route('/stocks/<string:ticker>', methods=['GET'])
 def stock_by_ticker(ticker):

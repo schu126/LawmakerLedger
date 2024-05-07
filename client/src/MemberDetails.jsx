@@ -1,15 +1,36 @@
-// components/MemberDetails.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import './MemberDetails.css';
 
 function MemberDetails() {
-  let { memberId } = useParams();
+  const { memberId } = useParams();
+  const [member, setMember] = useState(null);
+
+  useEffect(() => {
+    fetchMemberDetails();
+  }, [memberId]);
+
+  const fetchMemberDetails = async () => {
+    try {
+      const response = await fetch(`/members/${memberId}`);
+      const data = await response.json();
+      setMember(data);
+    } catch (error) {
+      console.error('Error fetching member details:', error);
+    }
+  };
+
+  if (!member) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div>
-      <h2>Member Details - {memberId}</h2>
-      <p>Details for member ID {memberId} will be displayed here.</p>
-      {/* Real data fetching and display logic goes here */}
+    <div className="member-details">
+      <h2 className="member-details-title">Member Details - {member.name}</h2>
+      <p className="member-details-info">Party: {member.party}</p>
+      <p className="member-details-info">State: {member.state}</p>
+      <p className="member-details-info">District: {member.district}</p>
+      {/* Display other member details */}
     </div>
   );
 }
