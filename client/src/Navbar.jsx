@@ -6,25 +6,15 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <div className="navbar-logo">
-          <Link to="/">LawmakerLedger</Link>
-        </div>
+        <Link to="/" className="navbar-logo">
+          <img src="/LawmakerLedgerLogo.png" alt="Lawmaker Ledger Logo" style={{ height: '50px' }} />
+          LawmakerLedger
+        </Link>
         <ul className="navbar-links">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/members">Members</Link>
-          </li>
-          <li>
-            <Link to="/stocks">Stocks</Link>
-          </li>
-          <li>
-            <Link to="/transactions">Transactions</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
+          <li><Link to="/members">Members</Link></li>
+          <li><Link to="/stocks">Stocks</Link></li>
+          <li><Link to="/transactions">Transactions</Link></li>
+          <li><Link to="/about">About</Link></li>
         </ul>
       </div>
     </nav>
