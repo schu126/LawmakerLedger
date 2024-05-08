@@ -111,14 +111,16 @@ function MemberDetails() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <Card className="mx-auto max-w-4xl p-4">
+    <div className="card-container">
+    <Card className="member-details mx-auto max-w-4xl p-4">
+      <div className="member-details">
       <h2>Member Details - {member?.name}</h2>
       <p>Party: {member?.party}</p>
-      <p>State: {member?.state}</p>
-      <p>District: {member?.district || 'N/A'}</p>
+    </div>
       
-      <h1>Industry Analysis</h1>
-      <BarChart width={1200} height={300} data={industryData}>
+    <div className="industry-analysis-section">
+        <h2>Industry Analysis</h2>
+      <BarChart width={1075} height={400} data={industryData}>
         <CartesianGrid strokeDasharray="5 5" />
         <XAxis dataKey="name" hide={true} />
         <YAxis />
@@ -126,51 +128,37 @@ function MemberDetails() {
         <Legend />
         <Bar dataKey="Trades" fill="#8884d8" name="Number of Trades" />
       </BarChart>
-{/*       
-      <h3>Invested Stocks</h3>
-      <Table className="mt-4">
-        <TableHead>
-          <TableRow>
-            <TableHeaderCell>Company Name</TableHeaderCell>
-            <TableHeaderCell>Ticker</TableHeaderCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {stocks.map(stock => (
-            <TableRow key={stock.id}>
-              <TableCell>{stock.company_name}</TableCell>
-              <TableCell>{stock.ticker}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table> */}
-
-      <h3>Transactions</h3>
-      <Table className="transaction-table">
-        <TableHead>
-          <TableRow>
-            <TableHeaderCell>Stock</TableHeaderCell>
-            <TableHeaderCell>Ticker</TableHeaderCell>
-            <TableHeaderCell>Type</TableHeaderCell>
-            <TableHeaderCell>Amount</TableHeaderCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {currentTransactions.map(transaction => (
-            <TableRow key={transaction.id}>
-              <TableCell>{transaction.stock ? transaction.stock.company_name : 'N/A'}</TableCell>
-              <TableCell>{transaction.stock ? transaction.stock.ticker : 'N/A'}</TableCell>
-              <TableCell>{transaction.type}</TableCell>
-              <TableCell>{transaction.amount}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <div className="flex justify-between mt-4">
-        <Button className="transaction-button" onClick={handlePrevious} disabled={currentPage === 1}>Previous</Button>
-        <Button className="transaction-button" onClick={handleNext} disabled={currentPage >= Math.ceil(transactions.length / transactionsPerPage)}>Next</Button>
       </div>
-    </Card>
+
+      <div className="transactions-section">
+        <h2>Transactions</h2>
+        <Table className="transaction-table">
+          <TableHead>
+            <TableRow>
+              <TableHeaderCell>Stock</TableHeaderCell>
+              <TableHeaderCell>Ticker</TableHeaderCell>
+              <TableHeaderCell>Type</TableHeaderCell>
+              <TableHeaderCell className="text-right">Amount</TableHeaderCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {currentTransactions.map(transaction => (
+              <TableRow key={transaction.id}>
+                <TableCell>{transaction.stock ? transaction.stock.company_name : 'N/A'}</TableCell>
+                <TableCell>{transaction.stock ? transaction.stock.ticker : 'N/A'}</TableCell>
+                <TableCell>{transaction.type}</TableCell>
+                <TableCell>{transaction.amount}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <div className="flex justify-between mt-4">
+          <Button className="transaction-button" onClick={handlePrevious} disabled={currentPage === 1}>Previous</Button>
+          <Button className="transaction-button" onClick={handleNext} disabled={currentPage >= Math.ceil(transactions.length / transactionsPerPage)}>Next</Button>
+        </div>
+        </div>
+      </Card>
+      </div>
   );
 }
 

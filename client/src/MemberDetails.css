@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+.member-details {
+  background-color: #fff; /* Ensures background is white */
+  padding: 20px;
+  margin-bottom: 30px; /* Adds space below the card */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: adds shadow for depth */
+  border-radius: 8px; /* Rounds the corners of the card */
+}
+
+.member-details h2,
+.member-details p {
+    color: #333; /* Dark gray, nearly black for better readability */
+}
+
 .card-container {
   margin: auto;
   max-width: 95%;
@@ -21,6 +34,7 @@
 
 .transaction-table th,
 .transaction-table td {
+  width: 100%;
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #dddddd;
@@ -30,10 +44,12 @@
   background-color: #f4f4f9;
   color: #333;
   font-weight: 600;
+  text-align: center;
 }
 
 .transaction-table td {
   color: #666;
+  text-align: left;
 }
 
 .transaction-table tbody tr:nth-child(even) {
@@ -73,4 +89,11 @@
     padding: 8px 10px;
     font-size: 14px;
   }
+}
+
+.transactions-section, .industry-analysis-section {
+  padding: 20px;
+  margin-top: 20px;
+  border-top: 2px solid #ccc; /* Adds a subtle line to distinguish sections */
+  background-color: #f9f9f9; /* Slightly different background for separation */
 }
