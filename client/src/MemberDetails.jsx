@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, Table, TableBody, TableHead, TableHeaderCell, TableRow, TableCell } from '@tremor/react';
+import { Button, Card, Table, TableBody, TableHead, TableHeaderCell, TableRow, TableCell } from '@tremor/react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-
-
-
-// import './MemberDetails.css';
+import './MemberDetails.css';
 
 function MemberDetails() {
   const { memberId } = useParams();
@@ -15,6 +12,8 @@ function MemberDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [industryData, setIndustryData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [transactionsPerPage] = useState(10);  
 
 
   useEffect(() => {
@@ -95,6 +94,18 @@ function MemberDetails() {
   
     return null;
   };
+
+  const indexOfLastTransaction = currentPage * transactionsPerPage;
+  const indexOfFirstTransaction = indexOfLastTransaction - transactionsPerPage;
+  const currentTransactions = transactions.slice(indexOfFirstTransaction, indexOfLastTransaction);
+
+  const handleNext = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const handlePrevious = () => {
+    setCurrentPage(currentPage - 1);
+  };
   
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -135,7 +146,7 @@ function MemberDetails() {
       </Table> */}
 
       <h3>Transactions</h3>
-      <Table className="mt-4">
+      <Table className="transaction-table">
         <TableHead>
           <TableRow>
             <TableHeaderCell>Stock</TableHeaderCell>
@@ -145,7 +156,7 @@ function MemberDetails() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {transactions.map(transaction => (
+          {currentTransactions.map(transaction => (
             <TableRow key={transaction.id}>
               <TableCell>{transaction.stock ? transaction.stock.company_name : 'N/A'}</TableCell>
               <TableCell>{transaction.stock ? transaction.stock.ticker : 'N/A'}</TableCell>
@@ -155,7 +166,10 @@ function MemberDetails() {
           ))}
         </TableBody>
       </Table>
-
+      <div className="flex justify-between mt-4">
+        <Button className="transaction-button" onClick={handlePrevious} disabled={currentPage === 1}>Previous</Button>
+        <Button className="transaction-button" onClick={handleNext} disabled={currentPage >= Math.ceil(transactions.length / transactionsPerPage)}>Next</Button>
+      </div>
     </Card>
   );
 }
