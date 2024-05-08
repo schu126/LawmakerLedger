@@ -1,17 +1,54 @@
+/* Styling for the entire member details section */
 .member-details {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
-  .member-details-title {
-    font-size: 2rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 1rem;
-  }
-  
-  .member-details-info {
-    font-size: 1.2rem;
-    color: #666;
-  }
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.member-details h2,
+.member-details h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Styling for the list of stocks */
+.member-details ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.member-details li {
+  padding: 8px;
+  background: #f9f9f9;
+  border-bottom: 1px solid #eee;
+}
+
+/* Styling for the transactions table */
+.transaction-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.transaction-table th,
+.transaction-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+.transaction-table th {
+  background-color: #4A90E2;
+  color: white;
+  font-weight: bold;
+}
+
+.transaction-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.transaction-table td.text-right {
+  text-align: right;
+}
