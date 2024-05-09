@@ -8,12 +8,13 @@ import Navbar from './Navbar';
 import StockList from './StockList';
 import StockDetails from './StockDetails';
 import TransactionList from './TransactionList';
+import './App.css';
 
 function App() {
   return (
     <Router>
       <Navbar />
-      <div>
+      <div className="main-content">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/members" element={<MemberList />} />

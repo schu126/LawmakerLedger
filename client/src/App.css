@@ -3,3 +3,8 @@
   margin: 0 auto;
   padding: 2rem;
 }
+
+.main-content {
+  padding-top: 70px; /* This pushes the main content down so it starts below the navbar */
+}
+

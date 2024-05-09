@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@tremor/react';
 import './TransactionList.css';
+import { ThreeDots } from 'react-loader-spinner';
+
 
 function TransactionList() {
   const [transactions, setTransactions] = useState([]);
@@ -43,40 +45,47 @@ function TransactionList() {
     setCurrentPage(currentPage - 1);
   };
 
-  if (loading) return <div>Loading transactions...</div>;
+  if (loading) return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <ThreeDots color="#00BFFF" height={80} width={80} />
+    </div>
+  );
   if (error) return <div>Error: {error}</div>;
+  
 
   return (
     <div className="card-container">
-    <Card>
-      <h3 className="text-lg font-semibold mb-4">Transaction List</h3>
-      <Table className="transaction-table">
-        <TableHead>
-          <TableRow>
-            <TableHeaderCell>Trader Name</TableHeaderCell>
-            <TableHeaderCell>Stock Company</TableHeaderCell>
-            <TableHeaderCell>Ticker</TableHeaderCell>
-            <TableHeaderCell>Type</TableHeaderCell>
-            <TableHeaderCell className="text-right">Amount</TableHeaderCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {currentTransactions.map((transaction) => (
-            <TableRow key={transaction.id}>
-              <TableCell>{transaction.member ? transaction.member.name : 'N/A'}</TableCell>
-              <TableCell>{transaction.stock ? transaction.stock.company_name : 'N/A'}</TableCell>
-              <TableCell>{transaction.stock ? transaction.stock.ticker : 'N/A'}</TableCell>
-              <TableCell>{transaction.type}</TableCell>
-              <TableCell className="text-right">{transaction.amount}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <div className="flex justify-between mt-4">
-        <Button className="transaction-button" variant="primary" onClick={handlePrevious} disabled={currentPage === 1}>Previous</Button>
-        <Button className="transaction-button" variant="primary" onClick={handleNext} disabled={currentPage >= Math.ceil(transactions.length / transactionsPerPage)}>Next</Button>
+      <div>
+        <h2>Transaction </h2>
       </div>
-    </Card>
+      <Card>
+        <Table className="transaction-table">
+          <TableHead>
+            <TableRow>
+              <TableHeaderCell>Trader Name</TableHeaderCell>
+              <TableHeaderCell>Stock Company</TableHeaderCell>
+              <TableHeaderCell>Ticker</TableHeaderCell>
+              <TableHeaderCell>Type</TableHeaderCell>
+              <TableHeaderCell className="text-right">Amount</TableHeaderCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {currentTransactions.map((transaction) => (
+              <TableRow key={transaction.id}>
+                <TableCell>{transaction.member ? transaction.member.name : 'N/A'}</TableCell>
+                <TableCell>{transaction.stock ? transaction.stock.company_name : 'N/A'}</TableCell>
+                <TableCell>{transaction.stock ? transaction.stock.ticker : 'N/A'}</TableCell>
+                <TableCell>{transaction.type}</TableCell>
+                <TableCell className="text-right">{transaction.amount}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <div className="flex justify-between mt-4">
+          <Button className="transaction-button" variant="primary" onClick={handlePrevious} disabled={currentPage === 1}>Previous</Button>
+          <Button className="transaction-button" variant="primary" onClick={handleNext} disabled={currentPage >= Math.ceil(transactions.length / transactionsPerPage)}>Next</Button>
+        </div>
+      </Card>
     </div>
   );
 }
