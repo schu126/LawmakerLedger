@@ -1,0 +1,57 @@
+/* Container styling for the overall layout */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.card-container {
+    margin: auto;
+    max-width: 95%;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+/* Styling for the stock table to make it more readable and elegant */
+.stock-table th {
+    background-color: #f4f4f9; /* Light gray background for headers */
+    color: #333; /* Dark gray text for better contrast */
+    font-size: 16px; /* Legible font size */
+    font-weight: 600; /* Bold font weight for headers */
+}
+
+.stock-table th, .stock-table td {
+    padding: 12px 15px; /* Adequate padding for spacing */
+    text-align: left; /* Align text to the left */
+    border-bottom: 1px solid #dddddd; /* Subtle border for each cell */
+}
+
+.stock-table td {
+    color: #666; /* Medium gray text color */
+}
+
+.stock-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Zebra striping for rows */
+}
+
+/* Styling for buttons in the stock list for consistency */
+.stock-button {
+    padding: 10px 20px; /* Comfortable padding */
+    font-size: 16px; /* Readable font size */
+    color: white; /* White text */
+    background-color: #0056b3; /* Primary blue background */
+    border: none; /* No border for a cleaner look */
+    border-radius: 5px; /* Slightly rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-right: 10px; /* Space between buttons */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.stock-button:hover {
+    background-color: #004494; /* Darker blue on hover for interaction feedback */
+}
+
+.stock-button:disabled {
+    background-color: #cccccc; /* Disabled state shown with gray */
+    cursor: not-allowed; /* Not allowed cursor for disabled state */
+}

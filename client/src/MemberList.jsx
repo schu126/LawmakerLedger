@@ -6,12 +6,28 @@ function MemberList() {
   const [members, setMembers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterParty, setFilterParty] = useState('');
-  const [error, setError] = useState(null); 
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchMembers();
   }, []);
+
+  useEffect(() => {
+    const placeholders = ["Search by name...", "Enter lawmaker's name...", "Try 'John Doe'..."];
+    let currentIndex = 0;
+    
+    const intervalId = setInterval(() => {
+      const searchInput = document.querySelector('.search-input');
+      if (searchInput) {
+        searchInput.placeholder = placeholders[currentIndex];
+        currentIndex = (currentIndex + 1) % placeholders.length;
+      }
+    }, 2000); 
+  
+    return () => clearInterval(intervalId); // Cleanup on component unmount
+  }, []);
+  
 
   const fetchMembers = async () => {
     setLoading(true); // Set loading to true when the fetch begins
@@ -26,7 +42,7 @@ function MemberList() {
       console.error('Error fetching members:', error);
       setError(error.message);
     } finally {
-      setLoading(false); // Set loading to false once fetching is complete
+      setLoading(false); 
     }
   };
 
@@ -49,17 +65,19 @@ function MemberList() {
       <h2 className="members-title">Members of Congress</h2>
       {error && <p className="error">Error fetching members: {error}</p>}
       {loading ? (
-        <div className="loader"></div> // Display spinner while loading
+        <div className="loader"></div>
       ) : (
         <div>
           <div className="search-filter">
-            <input
-              type="text"
-              placeholder="Search by name"
-              value={searchQuery}
-              onChange={handleSearch}
-              className="search-input"
-            />
+            <div className="search-container">
+              <input
+                type="text"
+                placeholder="Search by name"
+                value={searchQuery}
+                onChange={handleSearch}
+                className="search-input"
+              />
+            </div>
             <select value={filterParty} onChange={handleFilterParty} className="filter-select">
               <option value="">All Parties</option>
               <option value="Republican">Republican</option>

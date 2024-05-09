@@ -14,20 +14,27 @@
   
   .member-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust minmax for smaller cards on narrow screens */
     gap: 1rem;
+    padding: 1rem;
   }
   
   .member-card {
     background-color: white;
+    background-image: linear-gradient(to right, #ffffff, #f9f9f9);
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, background-image 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
   
   .member-card:hover {
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    background-image: linear-gradient(to right, #f9f9f9, #e6e6e6);
   }
   
   .member-link {
@@ -59,4 +66,58 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  
+  
+  .search-container {
+    position: relative;
+    padding-top: 1.5rem;
+    flex-grow: 1; 
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    padding-left: 1rem; /* Adjust if you have an icon */
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 0.5rem;
+    position: relative;
+    background-color: rgb(0, 0, 0);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+  }
+  
+  .search-input:focus {
+    border-color: #3498db;
+    background-color: #000000;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+  }
+
+  .filter-select {
+    width: 100%; /* Match width with the search input */
+    height: 50px; /* Increased height for better visibility and interaction */
+    padding: 10px 20px; /* Adjust padding for visual balance */
+    font-size: 1.2rem; /* Larger font size for readability */
+    border: 2px solid #ccc; /* Consistent with the search input */
+    border-radius: 0.5rem; /* Rounded corners to match the search input */
+    box-sizing: border-box; /* Include padding and border in the element's total dimensions */
+    background-color: rgb(0, 0, 0); /* Background color */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for interaction */
+    -webkit-appearance: none; /* Remove default styling for consistency across browsers */
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer; /* Indicates it's a selectable element */
+    position: relative; /* For absolute positioning of custom arrow */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><polygon points="70,105 105,45 35,45 " fill="%23ffffff"/></svg>'); /* Custom dropdown arrow */
+    background-repeat: no-repeat;
+    background-position: right 1rem center; /* Position the arrow appropriately */
+    background-size: 12px; /* Appropriate size for the dropdown arrow */
+  }
+  
+  .filter-select:focus {
+    border-color: #3498db; /* Highlight color on focus */
+    background-color: #000000; /* Light blue background on focus for visibility */
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5); /* Glow effect to match the search input */
+  }
+  
   
