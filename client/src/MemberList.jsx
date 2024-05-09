@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './MemberList.css';
+import { ThreeDots } from 'react-loader-spinner';
 
 function MemberList() {
   const [members, setMembers] = useState([]);
@@ -16,21 +17,20 @@ function MemberList() {
   useEffect(() => {
     const placeholders = ["Search by name...", "Enter lawmaker's name...", "Try 'John Doe'..."];
     let currentIndex = 0;
-    
+
     const intervalId = setInterval(() => {
       const searchInput = document.querySelector('.search-input');
       if (searchInput) {
         searchInput.placeholder = placeholders[currentIndex];
         currentIndex = (currentIndex + 1) % placeholders.length;
       }
-    }, 2000); 
-  
+    }, 2000); // Changes placeholder every 2 seconds
+
     return () => clearInterval(intervalId); // Cleanup on component unmount
-  }, []);
-  
+  }, []); // This effect only runs once on mount
 
   const fetchMembers = async () => {
-    setLoading(true); // Set loading to true when the fetch begins
+    setLoading(true);
     try {
       const response = await fetch('http://localhost:5555/members');
       if (!response.ok) {
@@ -42,7 +42,7 @@ function MemberList() {
       console.error('Error fetching members:', error);
       setError(error.message);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -54,7 +54,7 @@ function MemberList() {
     setFilterParty(e.target.value);
   };
 
-  const filteredMembers = members.filter((member) => {
+  const filteredMembers = members.filter(member => {
     const nameMatch = member.name.toLowerCase().includes(searchQuery.toLowerCase());
     const partyMatch = filterParty === '' || member.party === filterParty;
     return nameMatch && partyMatch;
@@ -62,10 +62,11 @@ function MemberList() {
 
   return (
     <div className="container">
-      <h2 className="members-title">Members of Congress</h2>
       {error && <p className="error">Error fetching members: {error}</p>}
       {loading ? (
-        <div className="loader"></div>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <ThreeDots color="#00BFFF" height={80} width={80} />
+        </div>
       ) : (
         <div>
           <div className="search-filter">
@@ -73,12 +74,16 @@ function MemberList() {
               <input
                 type="text"
                 placeholder="Search by name"
+                className="search-input"
                 value={searchQuery}
                 onChange={handleSearch}
-                className="search-input"
               />
             </div>
-            <select value={filterParty} onChange={handleFilterParty} className="filter-select">
+            <select
+              value={filterParty}
+              onChange={handleFilterParty}
+              className="filter-select"
+            >
               <option value="">All Parties</option>
               <option value="Republican">Republican</option>
               <option value="Democrat">Democratic</option>
@@ -100,6 +105,5 @@ function MemberList() {
     </div>
   );
 }
-
 
 export default MemberList;
